@@ -15,6 +15,7 @@ class GitHubLogin extends Component {
     onFailure: PropTypes.func,
     redirectUri: PropTypes.string,
     scope: PropTypes.string,
+    render: PropTypes.func,
   }
 
   static defaultProps = {
@@ -63,14 +64,18 @@ class GitHubLogin extends Component {
   }
 
   render() {
-    const { className, buttonText, children } = this.props;
+    const { className, buttonText, children, render: renderComponent } = this.props;
     const attrs = { onClick: this.onBtnClick };
 
     if (className) {
       attrs.className = className;
     }
 
-    return <button {...attrs}>{ children || buttonText }</button>;
+    if (renderComponent) {
+      return renderComponent(attrs);
+    } else {
+      return <button {...attrs}>{ children || buttonText }</button>;
+    }
   }
 }
 
